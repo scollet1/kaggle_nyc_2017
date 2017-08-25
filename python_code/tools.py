@@ -11,6 +11,47 @@
 # **************************************************************************** #
 
 from math import sin, cos, sqrt, atan2, radians
+import random
+
+def find_divisor(neighbor, time):
+    n = 0
+    m = 0
+
+    if time + 1 in neighbor:
+        n = random.choice(neighbor[time + 1]).accuracy
+    else:
+        n = random.choice(neighbor[time]).accuracy
+    if time - 1 in neighbor:
+        m = random.choice(neighbor[time - 1]).accuracy
+    else:
+        m = random.choice(neighbor[time]).accuracy
+    return n + m
+
+def find_neighbors(neighbor, time):
+    n = 0
+    m = 0
+
+    #print time
+    if time + 1 in neighbor:
+        n = random.choice(neighbor[time + 1]).duration
+    else:
+        n = random.choice(neighbor[time]).duration
+    if time - 1 in neighbor:
+        m = random.choice(neighbor[time - 1]).duration
+    else:
+        m = random.choice(neighbor[time]).duration
+    return n + m
+
+'''
+def set_field(agents, field="None"):
+    if field == "None":
+        pass
+    else:
+        for distance, duration in agents.items():
+            for time, data in duration.items():
+                if field == "accuracy":
+    return agents
+'''
 
 def find_distance(lon, lat, dlong, dlat):
     distance = 0
@@ -44,8 +85,8 @@ def convert_time(start_date, end_date):
 
     start_date = start_date.split()
     end_date = end_date.split()
-    start = time.strptime(start_date[1].split(',')[0],'%H:%M:%S')
-    end = time.strptime(end_date[1].split(',')[0],'%H:%M:%S')
+    start = time.strptime(start_date[1].split(",")[0],"%H:%M:%S")
+    end = time.strptime(end_date[1].split(",")[0],"%H:%M:%S")
     start = datetime.timedelta(
             hours=start.tm_hour,
             minutes=start.tm_min,
