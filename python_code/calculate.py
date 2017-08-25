@@ -29,14 +29,12 @@ def average(time):
 
 def accuracy(time):
     for duration, agents in time.items():
+        sum_over = 1
+        for members in range(len(agents) - 1):
+            sum_over += 1
         for agent in agents:
-            sum_over = 1
-            for members in range(len(agents) - 1):
-                sum_over += 1
-            if distance == 0:
-                distance = 1
             agent.accuracy += 1.000 / \
-            ((agent.index / sum_over) + 1)
+            ((float(agent.index) / sum_over) + 1)
             print agent.accuracy
 
 def optimal(time):
