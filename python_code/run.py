@@ -16,7 +16,7 @@ import time
 import tools
 import calculate
 import sys
-#from display import display # NOTE : thing go here
+from display import display # NOTE : thing go here
 import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
