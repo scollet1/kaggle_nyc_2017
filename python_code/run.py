@@ -26,7 +26,7 @@ EPOCHS = 5
 class Agent:
     def __init__(self):
         self.ID = 0
-        self.duration = 0
+        self.duration = 1
         self.target = 0
         self.passengers = 0
         self.distance = 0
@@ -38,7 +38,7 @@ class Agent:
     def duration(self):
         return self._duration
     def target(self):
-        return self._duration
+        return self._target
     def passengers(self):
         return self._passengers
     def distance(self):
@@ -51,22 +51,26 @@ class Agent:
         return self._accuracy
 
 
-def parse():
+def parse(agents):
     with open('../train.csv', 'rb') as csvfile:
-        agents = {}
         #agents[0][0] = {}
         next(csvfile)
         training_data = csv.reader(csvfile, delimiter=',')
+
         for row in training_data:
+
             agent = Agent()
             agent.ID = row[0]
             agent.vendor = row[1]
             agent.passengers = int(row[4])
             agent.distance = float(tools.find_distance(row[5], row[6], row[7], row[8]))
+            #print agent.distance
             agent.duration = int(row[10])
+            #print agent.duration
             index = int(agent.distance)
             agent.index = index
-            index2 = int(agent.duration)
+            index2 = agent.duration
+            #print "INDICES : ", index, index2
             if not index in agents:
                 agents[index] = {}
             if not index2 in agents[index]:
@@ -83,27 +87,32 @@ def write_data(agents, raw_data):
         writer = csv.writer(csvfile, delimiter=',')
         writer.writerow(['distance', 'duration'])
         for distance, time in agents.items():
-            for duration, agent in time.items():
-                print distance, duration
-                writer.writerow([distance, duration])
+            for dur, agents in time.items():
+                for agent, data in enumerate(agents):
+                    writer.writerow([data.index, data.duration])
+                    print "LENGTH AND TIME : ", data.index, data.duration
 
 def run():
     random.seed()
-    agents = parse()
+    agents = {}
+    parse(agents)
     #agents = tools.set_field(agents, "accuracy") # NOTE : maybe come back to this
     #agents = tools.set_field(agents, "max_distance") # NOTE : come back to this
     #agents = tools.set_field(agents, "max_duration") # NOTE : come back to this
-    raw_data = agents
+    print "before copy data"
+    #raw_data = deepcopy(agents)
     for i in range(EPOCHS):
-        for distance, time in agents.items():
+        for length, time in agents.items():
             calculate.average(time)
+            sys.exit(0)
             #print "leave avg"
             calculate.accuracy(time)
             #print "leave acc"
             calculate.optimal(time)
-            print distance
-            sys.stdout.flush()
             #print "leave opt"
+
+            print length
+            sys.stdout.flush()
         print "Epoch : ", i
         sys.stdout.flush()
     #calculate.ground_truth(raw_data) # TODO : FINISH WRITING

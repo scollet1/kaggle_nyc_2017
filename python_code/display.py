@@ -20,6 +20,7 @@ import pandas as pandas
 def display():
 	agents = pandas.read_csv('../data_out.csv')
 	#agents.head()
-	seaborn.lmplot(x="distance", y="duration", data=agents, fit_reg=True).savefig('../test.png')
+	seaborn.lmplot(x="distance", y="duration", \
+	data=agents, fit_reg=True).savefig('../test.png')
 
 display()
