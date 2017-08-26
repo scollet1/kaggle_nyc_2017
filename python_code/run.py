@@ -78,8 +78,14 @@ def parse():
             #            print i, point.duration, point.ID, point.vendor
     return agents
 
+def write_data(agents, raw_data):
+    with open('../data_out.csv', 'wb') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',')
+        for distance, time in agents.items():
+            for duration, agent in time.items():
+                writer.writerow([distance, duration])
+
 def run():
-    #agents = Agent()
     random.seed()
     agents = parse()
     #agents = tools.set_field(agents, "accuracy") # NOTE : maybe come back to this
@@ -99,6 +105,7 @@ def run():
         print "Epoch : ", i
         sys.stdout.flush()
     #calculate.ground_truth(raw_data) # TODO : FINISH WRITING
-    display(agents, raw_data)
+    write_data(agents, raw_data)
+    #display()
 
 run()
