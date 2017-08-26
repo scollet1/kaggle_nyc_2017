@@ -15,12 +15,13 @@ import datetime
 import time
 import tools
 import calculate
-#from display import display # NOTE : thing go here
+import sys
+from display import display # NOTE : thing go here
 import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 500
+EPOCHS = 1
 
 class Agent:
     def __init__(self):
@@ -88,12 +89,16 @@ def run():
     for i in range(EPOCHS):
         for distance, time in agents.items():
             calculate.average(time)
-            print "leave avg"
+            #print "leave avg"
             calculate.accuracy(time)
-            print "leave acc"
+            #print "leave acc"
             calculate.optimal(time)
-            print "leave opt"
-    calculate.ground_truth(raw_data)
+            print distance
+            sys.stdout.flush()
+            #print "leave opt"
+        print "Epoch : ", i
+        sys.stdout.flush()
+    #calculate.ground_truth(raw_data) # TODO : FINISH WRITING
     display(agents, raw_data)
 
 run()

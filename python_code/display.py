@@ -10,4 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
+import seaborn
 
+def display(agents, raw_data):
+    seaborn.lmplot(x="distance", y="time", data=agents)

@@ -35,14 +35,15 @@ def accuracy(time):
         for agent in agents:
             agent.accuracy += 1.000 / \
             ((float(agent.index) / sum_over) + 1)
-            print agent.accuracy
+            #print agent.accuracy
 
 def optimal(time):
     for duration, agents in time.items():
         for agent in agents:
             probability = agent.accuracy / tools.find_divisor(time, duration)
+            #print probability
             if random.random <= probability:
-                agent.remove(agent)
+                agents.remove(agent)
                 if not duration in time.items():
                     time[agent.target] = {}
                 time[agent.target].append(agent)
