@@ -11,6 +11,10 @@
 # **************************************************************************** #
 
 import seaborn
+import pandas as pandas
+from matplotlib import pyplot
 
 def display(agents, raw_data):
+    agents = pandas.read_csv('../data_out.csv')
+    agents.head()
     seaborn.lmplot(x="distance", y="time", data=agents)
