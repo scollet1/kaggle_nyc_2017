@@ -12,6 +12,7 @@
 
 from math import sin, cos, sqrt, atan2, radians
 import random
+import sys
 
 def find_divisor(neighbor, time):
     n = 0
@@ -31,7 +32,7 @@ def find_neighbors(neighbor, time):
     n = 0
     m = 0
 
-    #print time
+    #print "TIME IN NEIGHBORS : ", time
     if time + 1 in neighbor:
         n = random.choice(neighbor[time + 1]).duration
     else:
@@ -40,6 +41,7 @@ def find_neighbors(neighbor, time):
         m = random.choice(neighbor[time - 1]).duration
     else:
         m = random.choice(neighbor[time]).duration
+    #print "N AND M : ", n, m
     return n + m
 
 '''

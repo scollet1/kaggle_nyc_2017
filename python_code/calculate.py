@@ -17,15 +17,14 @@ def average(time):
     avrg = 0
 
     for duration, agents in time.items():
-        if duration == "accuracy":
-            pass
-        else:
-            for agent, data in enumerate(agents):
-                #print data.ID
-                avrg = data.duration + tools.find_neighbors(time, duration)
-                avrg = int(avrg)
-                avrg /= 3
-                data.target = avrg
+        for agent, data in enumerate(agents):
+            #print "DURATION : ", data.duration
+            avrg = data.duration + tools.find_neighbors(time, duration)
+            #print "AVERAGE : ", avrg
+            avrg /= 3
+            #print "AVERAGE AFTER DIVIDE : ", avrg
+            avrg = int(avrg)
+            data.target = avrg
 
 def accuracy(time):
     for duration, agents in time.items():
@@ -35,13 +34,13 @@ def accuracy(time):
         for agent in agents:
             agent.accuracy += 1.000 / \
             ((float(agent.index) / sum_over) + 1)
-            #print agent.accuracy
+            #print "AGENT ACCURACY : ", agent.accuracy
 
 def optimal(time):
     for duration, agents in time.items():
         for agent in agents:
             probability = agent.accuracy / tools.find_divisor(time, duration)
-            #print probability
+            #print "PROBABILITY OF SWITCHING : ", probability
             if random.random <= probability:
                 agents.remove(agent)
                 if not duration in time.items():

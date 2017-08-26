@@ -16,12 +16,12 @@ import time
 import tools
 import calculate
 import sys
-from display import display # NOTE : thing go here
+#from display import display # NOTE : thing go here
 import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 50
+EPOCHS = 5
 
 class Agent:
     def __init__(self):
@@ -61,9 +61,9 @@ def parse():
             agent = Agent()
             agent.ID = row[0]
             agent.vendor = row[1]
-            agent.passengers = row[4]
-            agent.distance = tools.find_distance(row[5], row[6], row[7], row[8])
-            agent.duration = row[10]
+            agent.passengers = int(row[4])
+            agent.distance = float(tools.find_distance(row[5], row[6], row[7], row[8]))
+            agent.duration = int(row[10])
             index = int(agent.distance)
             agent.index = index
             index2 = int(agent.duration)
@@ -107,6 +107,7 @@ def run():
         print "Epoch : ", i
         sys.stdout.flush()
     #calculate.ground_truth(raw_data) # TODO : FINISH WRITING
+    #sys.exit(0)
     write_data(agents, raw_data)
     #display()
 
