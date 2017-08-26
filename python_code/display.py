@@ -10,11 +10,16 @@
 #                                                                              #
 # **************************************************************************** #
 
+
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot
 import seaborn
 import pandas as pandas
-from matplotlib import pyplot
 
-def display(agents, raw_data):
+def display():
 	agents = pandas.read_csv('../data_out.csv')
 	agents.head()
-	seaborn.lmplot(x="distance", y="duration", data=agents, fit_reg=True).savefig('testing.png')
+	seaborn.lmplot(x="distance", y="duration", data=agents, fit_reg=True).savefig('../test.png')
+
+display()
