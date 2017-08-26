@@ -21,7 +21,7 @@ import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 1
+EPOCHS = 50
 
 class Agent:
     def __init__(self):
@@ -81,8 +81,10 @@ def parse():
 def write_data(agents, raw_data):
     with open('../data_out.csv', 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
+        writer.writerow(['distance', 'duration'])
         for distance, time in agents.items():
             for duration, agent in time.items():
+                print distance, duration
                 writer.writerow([distance, duration])
 
 def run():

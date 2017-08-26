@@ -17,4 +17,4 @@ from matplotlib import pyplot
 def display(agents, raw_data):
     agents = pandas.read_csv('../data_out.csv')
     agents.head()
-    seaborn.lmplot(x="distance", y="time", data=agents)
+    seaborn.lmplot(x="distance", y="time", data=agents, fit_reg=True).savefig('testing.png')
