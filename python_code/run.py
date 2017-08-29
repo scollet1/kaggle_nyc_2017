@@ -21,7 +21,7 @@ import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 50
+EPOCHS = 250
 
 class Agent:
     def __init__(self):
