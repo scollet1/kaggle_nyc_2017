@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    engine.py                                          :+:      :+:    :+:    #
+#    calculate.py                                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: scollet <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/24 17:22:12 by scollet           #+#    #+#              #
-#    Updated: 2017/08/24 17:22:13 by scollet          ###   ########.fr        #
+#    Updated: 2017/08/27 05:29:20 by scollet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ def average(time):
     for dur, agents in time.items():
         #print "DUR : ", dur
         for data in agents:
-            print "DISTANCE, DURATION : ", data.distance, data.duration
+            #print "DISTANCE, DURATION : ", data.distance, data.duration
             avrg = data.duration + tools.find_neighbors(time, dur)
             #print "AVERAGE : ", avrg
             avrg /= 3
-            print "AVERAGE AFTER DIVIDE : ", avrg
+            #print "AVERAGE AFTER DIVIDE : ", avrg
             avrg = int(avrg)
             data.target = avrg
 
@@ -32,17 +32,17 @@ def accuracy(time):
         sum_over = 1
         for members in range(len(agents)):
             sum_over += 1
-            print members
+            #print members
         for agent in agents:
             agent.accuracy += 1.000 / \
             ((float(agent.index) / sum_over) + 1)
-            print "AGENT ACCURACY : ", agent.accuracy
+            #print "AGENT ACCURACY : ", agent.accuracy
 
 def optimal(time):
     for duration, agents in time.items():
         for agent, data in enumerate(agents):
             probability = data.accuracy / tools.find_divisor(time, duration)
-            print "PROBABILITY OF SWITCHING : ", probability
+            #print "PROBABILITY OF SWITCHING : ", probability
             if random.random <= probability:
                 agents.remove(data)
                 if not duration in time.items():
