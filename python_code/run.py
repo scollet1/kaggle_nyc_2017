@@ -21,7 +21,7 @@ import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 500
+EPOCHS = 50
 
 class Agent:
     def __init__(self):
@@ -95,7 +95,7 @@ def write_data(agents):
 			for dur, agents in time.items():
 				for agent, data in enumerate(agents):
 					writer.writerow([data.index, data.duration])
-					print "LENGTH AND TIME : ", data.index, data.duration
+					#print "LENGTH AND TIME : ", data.index, data.duration
 
 def run():
     random.seed()
@@ -116,7 +116,7 @@ def run():
             calculate.optimal(time)
             #print "leave opt"
 
-            print length
+            #print length
             sys.stdout.flush()
         print "Epoch : ", i
         sys.stdout.flush()

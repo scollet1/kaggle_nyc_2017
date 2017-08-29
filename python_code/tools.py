@@ -32,7 +32,7 @@ def find_neighbors(neighbor, time):
     n = 0
     m = 0
 
-    print "TIME IN NEIGHBORS : ", time
+    #print "TIME IN NEIGHBORS : ", time
     if time + 1 in neighbor:
         n = random.choice(neighbor[time + 1]).duration
     else:
@@ -41,7 +41,7 @@ def find_neighbors(neighbor, time):
         m = random.choice(neighbor[time - 1]).duration
     else:
         m = random.choice(neighbor[time]).duration
-    print "N AND M : ", n, m
+    #print "N AND M : ", n, m
     return n + m
 
 '''
