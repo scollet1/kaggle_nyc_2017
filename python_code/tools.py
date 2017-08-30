@@ -14,18 +14,20 @@ from math import sin, cos, sqrt, atan2, radians
 import random
 import sys
 
-def find_divisor(neighbor, time):
+def find_divisor(neighbor, duration):
     n = 0
     m = 0
 
-    if time + 1 in neighbor:
-        n = random.choice(neighbor[time + 1]).accuracy
+    #print neighbor.keys()
+    #print duration + 1
+    if duration + 1 in neighbor:
+        n = random.choice(neighbor[duration + 1]).accuracy
     else:
-        n = random.choice(neighbor[time]).accuracy
-    if time - 1 in neighbor:
-        m = random.choice(neighbor[time - 1]).accuracy
+        n = random.choice(neighbor[duration]).accuracy
+    if duration - 1 in neighbor:
+        m = random.choice(neighbor[duration - 1]).accuracy
     else:
-        m = random.choice(neighbor[time]).accuracy
+        m = random.choice(neighbor[duration]).accuracy
     return n + m
 
 def find_neighbors(neighbor, time):
@@ -34,13 +36,13 @@ def find_neighbors(neighbor, time):
 
     #print "TIME IN NEIGHBORS : ", time
     if time + 1 in neighbor:
-        n = random.choice(neighbor[time + 1]).duration
+        n = random.choice(neighbor[time + 1]).index2
     else:
-        n = random.choice(neighbor[time]).duration
+        n = random.choice(neighbor[time]).index2
     if time - 1 in neighbor:
-        m = random.choice(neighbor[time - 1]).duration
+        m = random.choice(neighbor[time - 1]).index2
     else:
-        m = random.choice(neighbor[time]).duration
+        m = random.choice(neighbor[time]).index2
     #print "N AND M : ", n, m
     return n + m
 

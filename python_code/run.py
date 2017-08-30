@@ -21,7 +21,7 @@ import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 250
+EPOCHS = 200
 
 class Agent:
     def __init__(self):
@@ -33,6 +33,7 @@ class Agent:
         self.vendor = 0
         self.accuracy = 0
         self.index = 0
+        self.index2 = 0
     def ID(self):
         return self._ID
     def duration(self):
@@ -45,6 +46,8 @@ class Agent:
         return self._distance
     def index(self):
         return self._index
+    def index2(self):
+        return self._index2
     def vendor(self):
         return self._vendor
     def accuracy(self):
@@ -52,40 +55,35 @@ class Agent:
 
 
 def parse(agents):
-	with open('../train.csv', 'rb') as csvfile:
-		#agents[0][0] = {}
-		next(csvfile)
-		training_data = csv.reader(csvfile, delimiter=',')
-
-		for row in training_data:
-			agent = Agent()
-			agent.ID = row[0]
-			agent.vendor = row[1]
-			agent.passengers = int(row[4])
-			agent.distance = float(tools.find_distance(row[5], row[6], row[7], row[8]))
-			index = int(agent.distance)
-			#print agent.duration
-			#print index
-			if int(row[10]) > 15000:
-				continue
-			if index > 100.0:
-				continue
-#				print "continue"
-#			print agent.distance
-			agent.duration = int(row[10])
-			agent.index = index
-			index2 = agent.duration
-			#print "INDICES : ", index, index2
-			if not index in agents:
-				agents[index] = {}
-			if not index2 in agents[index]:
-				agents[index][index2] = list()
-			agents[index][index2].append(deepcopy(agent))
+    with open('../train.csv', 'rb') as csvfile:
+        next(csvfile)
+        training_data = csv.reader(csvfile, delimiter=',')
+        for row in training_data:
+            agent = Agent()
+            agent.ID = row[0]
+            agent.vendor = row[1]
+            agent.passengers = int(row[4])
+            agent.distance = float(tools.find_distance(row[5], row[6], row[7], row[8]))
+            index = int(agent.distance)
+            if int(row[10]) > 15000:
+                continue
+            if index > 100.0:
+                continue
+            agent.duration = int(row[10])
+            agent.index = index
+            index2 = agent.duration
+            agent.index2 = index2
+            #print "INDICES : ", index, index2
+            if not index in agents:
+                agents[index] = {}
+            if not index2 in agents[index]:
+                agents[index][index2] = list()
+            agents[index][index2].append(deepcopy(agent))
             #for key, value in agents.items():
             #    for k, data in value.items():
             #        for i, point in enumerate(data):
             #            print i, point.duration, point.ID, point.vendor
-		return agents
+        return agents
 
 def write_data(agents):
 	with open('../data_out.csv', 'wb') as csvfile:
@@ -94,7 +92,7 @@ def write_data(agents):
 		for distance, time in agents.items():
 			for dur, agents in time.items():
 				for agent, data in enumerate(agents):
-					writer.writerow([data.index, data.duration])
+					writer.writerow([data.distance, data.index2])
 					#print "LENGTH AND TIME : ", data.index, data.duration
 
 def run():
@@ -110,14 +108,13 @@ def run():
         for length, time in agents.items():
             calculate.average(time)
             #sys.exit(0)
-            #print "leave avg"
+            print "leave avg"
             calculate.accuracy(time)
-            #print "leave acc"
+            print "leave acc"
             calculate.optimal(time)
-            #print "leave opt"
-
-            #print length
+            print "leave opt"
             sys.stdout.flush()
+            print length
         print "Epoch : ", i
         sys.stdout.flush()
     #calculate.ground_truth(raw_data) # TODO : FINISH WRITING
