@@ -23,6 +23,6 @@ def display():
 	seaborn.set_context("paper")
 	#agents.head()
 	seaborn.lmplot(x="distance", y="duration", \
-	data=agents, size=4, aspect=2, fit_reg=True,).savefig('../test.png')
+	data=agents, size=8, aspect=5, fit_reg=True,).savefig('../test.png')
 
 display()
