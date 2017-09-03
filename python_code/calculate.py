@@ -15,12 +15,11 @@ import random
 
 def average(time):
     avrg = 0
-
     for dur, agents in time.items():
         #print "DUR : ", dur
         for data in agents:
             #print "DISTANCE, DURATION : ", data.distance, data.duration
-            avrg = data.index2 + tools.find_neighbors(time, dur)
+            avrg = data.index2 + tools.find_neighbors(time, data.index2)
             #print "AVERAGE : ", avrg
             avrg /= 3
             #print "AVERAGE AFTER DIVIDE : ", avrg
@@ -35,19 +34,28 @@ def accuracy(time):
             #print members
         for agent in agents:
             agent.accuracy += 1.000 / \
-            ((float(agent.index) / sum_over) + 1)
+            ((float(agent.index) / sum_over))
             #print "AGENT ACCURACY : ", agent.accuracy
 
 def optimal(time):
-    for duration, agents in time.items():
-        print duration
-        for agent, data in enumerate(agents):
-            #print agent
-            probability = data.accuracy / tools.find_divisor(time, duration)
+    for dur, agents in time.items():
+        #print dur
+        for data in agents:
+            #print data.accuracy
+            probability = data.accuracy / tools.find_divisor(time, data.index2)
             #print "PROBABILITY OF SWITCHING : ", probability
             if random.random() <= probability:
-                agents.remove(data)
-                if not data.target in time.items():
+                #print "SWITCHED!!"
+                if not data.target in time:
                     time[data.target] = []
                 time[data.target].append(data)
+                if not data in time[data.index2]:
+                    pass
+                else:
+                    time[data.index2].remove(data)
+                if not time[data.index2]:
+                    time.remove(data.index2, None)
                 data.index2 = data.target
+                #print time[data.index2]
+            else:
+                pass

@@ -21,7 +21,7 @@ import random
 from copy import deepcopy
 from math import sin, cos, sqrt, atan2, radians
 
-EPOCHS = 200
+EPOCHS = 100
 
 class Agent:
     def __init__(self):
@@ -64,7 +64,7 @@ def parse(agents):
             agent.vendor = row[1]
             agent.passengers = int(row[4])
             agent.distance = float(tools.find_distance(row[5], row[6], row[7], row[8]))
-            index = int(agent.distance)
+            index = int(agent.distance) + 1
             if int(row[10]) > 15000:
                 continue
             if index > 100.0:
@@ -77,7 +77,7 @@ def parse(agents):
             if not index in agents:
                 agents[index] = {}
             if not index2 in agents[index]:
-                agents[index][index2] = list()
+                agents[index][index2] = []
             agents[index][index2].append(deepcopy(agent))
             #for key, value in agents.items():
             #    for k, data in value.items():
@@ -92,7 +92,7 @@ def write_data(agents):
 		for distance, time in agents.items():
 			for dur, agents in time.items():
 				for agent, data in enumerate(agents):
-					writer.writerow([data.distance, data.index2])
+					writer.writerow([data.index, data.index2])
 					#print "LENGTH AND TIME : ", data.index, data.duration
 
 def run():
@@ -113,10 +113,10 @@ def run():
             print "leave acc"
             calculate.optimal(time)
             print "leave opt"
-            sys.stdout.flush()
+            #sys.stdout.flush()
             print length
         print "Epoch : ", i
-        sys.stdout.flush()
+        #sys.stdout.flush()
     #calculate.ground_truth(raw_data) # TODO : FINISH WRITING
     #sys.exit(0)
     write_data(agents)

@@ -22,12 +22,16 @@ def find_divisor(neighbor, duration):
     #print duration + 1
     if duration + 1 in neighbor:
         n = random.choice(neighbor[duration + 1]).accuracy
-    else:
+    elif duration in neighbor:
         n = random.choice(neighbor[duration]).accuracy
+    else:
+        n = 0
     if duration - 1 in neighbor:
         m = random.choice(neighbor[duration - 1]).accuracy
-    else:
+    elif duration in neighbor:
         m = random.choice(neighbor[duration]).accuracy
+    else:
+        m = 0
     return n + m
 
 def find_neighbors(neighbor, time):
