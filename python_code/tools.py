@@ -14,10 +14,16 @@ from math import sin, cos, sqrt, atan2, radians
 import random
 import sys
 
-def find_divisor(neighbor, duration):
-    n = 0
-    m = 0
+def debug(agent):
+    print agent.ID
+    print agent.duration
+    print agent.index2
+    print agent.distance
+    print agent.index
+    print agent.accuracy
+    print "AGENT TARGET : ", agent.target
 
+def find_divisor(neighbor, duration):
     #print neighbor.keys()
     #print duration + 1
     if duration + 1 in neighbor:
@@ -25,29 +31,35 @@ def find_divisor(neighbor, duration):
     elif duration in neighbor:
         n = random.choice(neighbor[duration]).accuracy
     else:
-        n = 0
+        n = 1
     if duration - 1 in neighbor:
-        m = random.choice(neighbor[duration - 1]).accuracy
+        b = random.choice(neighbor[duration - 1])
+        if type(b) is int:
+            return 1
+        print b
+        debug(b)
+        print b.accuracy
+        m = b.accuracy
     elif duration in neighbor:
         m = random.choice(neighbor[duration]).accuracy
     else:
-        m = 0
+        m = 1
     return n + m
 
-def find_neighbors(neighbor, time):
+def find_neighbors(neighbor, duration):
     n = 0
     m = 0
 
-    #print "TIME IN NEIGHBORS : ", time
-    if time + 1 in neighbor:
-        n = random.choice(neighbor[time + 1]).index2
+    #print "duration IN NEIGHBORS : ", duration
+    if duration + 1 in neighbor:
+        n = random.choice(neighbor[duration + 1]).index2
     else:
-        n = random.choice(neighbor[time]).index2
-    if time - 1 in neighbor:
-        m = random.choice(neighbor[time - 1]).index2
+        n = random.choice(neighbor[duration]).index2
+    if duration - 1 in neighbor:
+        m = random.choice(neighbor[duration - 1]).index2
     else:
-        m = random.choice(neighbor[time]).index2
-    #print "N AND M : ", n, m
+        m = random.choice(neighbor[duration]).index2
+    print "N AND M : ", n, m
     return n + m
 
 '''

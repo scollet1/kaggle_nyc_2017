@@ -23,15 +23,15 @@ def average(time):
             avrg = agents[a].index2 + tools.find_neighbors(time, agents[a].index2)
             #print "AVERAGE : ", avrg
             avrg /= 3
-            #print "AVERAGE AFTER DIVIDE : ", avrg
+            print "AVERAGE AFTER DIVIDE : ", avrg
             avrg = int(avrg)
             agents[a].target = avrg
 
 def accuracy(time):
     for duration, agents in time.items():
-        sum_over = 1
-        for members in range(len(agents)):
-            sum_over += 1
+        #sum_over = 1
+        #for members in range(len(agents)):
+            #sum_over += 1
             #print members
         for a in range(len(agents)):
             dist = abs(float(agents[a].index2) - float(agents[a].target))
@@ -49,23 +49,29 @@ def optimal(time):
         #for a in range(len(agents)):
             #print agents[a].accuracy
         #sys.exit(1)
-        for i, a in enumerate(agents):
-            #print agents[a].accuracy
-            #print a
-            probability = a.accuracy / tools.find_divisor(time, a.index2)
-            #print "PROBABILITY OF SWITCHING : ", probability
-            if random.random() <= probability:
-                #print "SWITCHED!!"
-                if not a.target in time:
-                    time[a.target] = []
-                time[a.target].append(a)
-                if not a in time[a.index2]:
-                    pass
+        #if agents in time[dur]:
+        for a in range(len(agents)):
+            if type(a) is not int:
+                tools.debug(agents[a])
+                #print agents[a].accuracy
+                #print a
+                probability = agents[a].accuracy / tools.find_divisor(time, agents[a].index2)
+                print "PROBABILITY OF SWITCHING : ", probability
+                if random.random() <= probability:
+                    #print "SWITCHED!!"
+                    if not agents[a].target in time:
+                        time[agents[a].target] = []
+                    time[agents[a].target].append(a)
+                    if not a in time[agents[a].index2]:
+                        pass
+                    else:
+                        time[agents[a].index2].remove(a)
+                    if not time[agents[a].index2]:
+                        del time[agents[a].index2]
+                    agents[a].index2 = agents[a].target
+                    #print time[agents[a].index2]
                 else:
-                    time[a.index2].remove(a)
-                if not time[a.index2]:
-                    del time[a.index2]
-                a.index2 = a.target
-                #print time[agents[a].index2]
+                    #print "NOT SWITCHED!!"
+                    pass
             else:
                 pass

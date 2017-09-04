@@ -83,7 +83,7 @@ def parse(agents):
             #    for k, data in value.items():
             #        for i, point in enumerate(data):
             #            print i, point.duration, point.ID, point.vendor
-        return agents
+        #return agents
 
 def write_data(agents):
 	with open('../data_out.csv', 'wb') as csvfile:
@@ -91,8 +91,8 @@ def write_data(agents):
 		writer.writerow(['distance', 'duration'])
 		for distance, time in agents.items():
 			for dur, agents in time.items():
-				for agent, data in enumerate(agents):
-					writer.writerow([data.index, data.index2])
+				for data in range(len(agents)):
+					writer.writerow([agents[data].index, agents[data].index2])
 					#print "LENGTH AND TIME : ", data.index, data.duration
 
 def run():
