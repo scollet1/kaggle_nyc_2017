@@ -12,19 +12,20 @@
 
 import tools
 import random
+import sys
 
 def average(time):
     avrg = 0
     for dur, agents in time.items():
         #print "DUR : ", dur
-        for data in agents:
+        for a in range(len(agents)):
             #print "DISTANCE, DURATION : ", data.distance, data.duration
-            avrg = data.index2 + tools.find_neighbors(time, data.index2)
+            avrg = agents[a].index2 + tools.find_neighbors(time, agents[a].index2)
             #print "AVERAGE : ", avrg
             avrg /= 3
             #print "AVERAGE AFTER DIVIDE : ", avrg
             avrg = int(avrg)
-            data.target = avrg
+            agents[a].target = avrg
 
 def accuracy(time):
     for duration, agents in time.items():
@@ -32,30 +33,39 @@ def accuracy(time):
         for members in range(len(agents)):
             sum_over += 1
             #print members
-        for agent in agents:
-            agent.accuracy += 1.000 / \
-            ((float(agent.index) / sum_over))
-            #print "AGENT ACCURACY : ", agent.accuracy
+        for a in range(len(agents)):
+            dist = abs(float(agents[a].index2) - float(agents[a].target))
+            if dist == 0:
+                dist = 1
+            step = 1.000 / dist
+            #print "AGENT ACCURACY : ", step
+            agents[a].accuracy += step
 
 def optimal(time):
     for dur, agents in time.items():
         #print dur
-        for data in agents:
-            #print data.accuracy
-            probability = data.accuracy / tools.find_divisor(time, data.index2)
+        #print agents
+        #sys.exit(0)
+        #for a in range(len(agents)):
+            #print agents[a].accuracy
+        #sys.exit(1)
+        for i, a in enumerate(agents):
+            #print agents[a].accuracy
+            #print a
+            probability = a.accuracy / tools.find_divisor(time, a.index2)
             #print "PROBABILITY OF SWITCHING : ", probability
             if random.random() <= probability:
                 #print "SWITCHED!!"
-                if not data.target in time:
-                    time[data.target] = []
-                time[data.target].append(data)
-                if not data in time[data.index2]:
+                if not a.target in time:
+                    time[a.target] = []
+                time[a.target].append(a)
+                if not a in time[a.index2]:
                     pass
                 else:
-                    time[data.index2].remove(data)
-                if not time[data.index2]:
-                    time.remove(data.index2, None)
-                data.index2 = data.target
-                #print time[data.index2]
+                    time[a.index2].remove(a)
+                if not time[a.index2]:
+                    del time[a.index2]
+                a.index2 = a.target
+                #print time[agents[a].index2]
             else:
                 pass
