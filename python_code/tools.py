@@ -16,9 +16,9 @@ import sys
 
 def debug(agent):
     print agent.ID
-    print agent.duration
-    print agent.index2
-    print agent.distance
+    print "AGENT INITIAL DURATION : ", agent.duration
+    print "AGENT Y INDEX : ", agent.index2
+    print "AGENT INITIAL DISTANCE : ", agent.distance
     print agent.index
     print agent.accuracy
     print "AGENT TARGET : ", agent.target
@@ -26,19 +26,18 @@ def debug(agent):
 def find_divisor(neighbor, duration):
     #print neighbor.keys()
     #print duration + 1
-    if duration + 1 in neighbor:
-        n = random.choice(neighbor[duration + 1]).accuracy
+    offset = random.randint(2, 10)
+    if duration + offset in neighbor:
+        n = random.choice(neighbor[duration + offset]).accuracy
     elif duration in neighbor:
         n = random.choice(neighbor[duration]).accuracy
     else:
         n = 1
-    if duration - 1 in neighbor:
-        b = random.choice(neighbor[duration - 1])
+    offset = random.randint(2, 10)
+    if duration - offset in neighbor:
+        b = random.choice(neighbor[duration - offset])
         if type(b) is int:
             return 1
-        print b
-        debug(b)
-        print b.accuracy
         m = b.accuracy
     elif duration in neighbor:
         m = random.choice(neighbor[duration]).accuracy
@@ -47,16 +46,17 @@ def find_divisor(neighbor, duration):
     return n + m
 
 def find_neighbors(neighbor, duration):
-    n = 0
-    m = 0
-
     #print "duration IN NEIGHBORS : ", duration
-    if duration + 1 in neighbor:
-        n = random.choice(neighbor[duration + 1]).index2
+    n = 1
+    m = 1
+    offset = random.randint(2, 10)
+    if duration + offset in neighbor:
+        n = random.choice(neighbor[duration + offset]).index2
     else:
         n = random.choice(neighbor[duration]).index2
-    if duration - 1 in neighbor:
-        m = random.choice(neighbor[duration - 1]).index2
+    offset = random.randint(2, 10)
+    if duration - offset in neighbor:
+        m = random.choice(neighbor[duration - offset]).index2
     else:
         m = random.choice(neighbor[duration]).index2
     print "N AND M : ", n, m

@@ -23,9 +23,10 @@ def average(time):
             avrg = agents[a].index2 + tools.find_neighbors(time, agents[a].index2)
             #print "AVERAGE : ", avrg
             avrg /= 3
-            print "AVERAGE AFTER DIVIDE : ", avrg
+            #print "AVERAGE AFTER DIVIDE : ", avrg
             avrg = int(avrg)
             agents[a].target = avrg
+            tools.debug(agents[a])
 
 def accuracy(time):
     for duration, agents in time.items():
@@ -52,11 +53,11 @@ def optimal(time):
         #if agents in time[dur]:
         for a in range(len(agents)):
             if type(a) is not int:
-                tools.debug(agents[a])
+                #tools.debug(agents[a])
                 #print agents[a].accuracy
                 #print a
                 probability = agents[a].accuracy / tools.find_divisor(time, agents[a].index2)
-                print "PROBABILITY OF SWITCHING : ", probability
+                #print "PROBABILITY OF SWITCHING : ", probability
                 if random.random() <= probability:
                     #print "SWITCHED!!"
                     if not agents[a].target in time:
